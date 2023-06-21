@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Administrator Home Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    h2 {
+        margin-top: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .grid-item {
+      background-color: #fff;
+      padding: 10px;
+    }
+
+    .button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+      margin-right: 10px;
+      margin-top: 10px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    input[type="del"]{
+      width: 20%;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="header">
+    <a class="button" href="/login">Log Out</a>
+    <h1>Administrator Home Page</h1>
+    <a class="button personal-info-button" href="personal-info.html">Personal Info</a>
+  </div>
+
+  <div class="container">
+    <h2>Operator Data</h2>
+    <div class="grid">
+        <div class="grid-item-title">Name</div>
+        <div class="grid-item-title">Username</div>
+        <div class="grid-item-title">Password</div>
+        <div class="grid-item-title">School</div>
+        {% for item in data %}
+        <div class="grid-item">{{ item[1] }}</div>
+        <div class="grid-item">{{ item[2] }}</div>
+        <div class="grid-item">{{ item[3] }}</div>
+        <div class="grid-item">{{ item[5] }}</div>
+        {% endfor %}
+    </div>
+    <form action="/del" method="post">
+        <button class="button" type="submit"value="Del">Delete Operator</button>
+        <input type="del" name="delOP" placeholder="Operator Name"required>
+    </form>
+  </div>
+
+  <div id="popup-container" class="container">
+    <h2>Database</h2>
+    <form action="/backup" method="post">
+      <button class="button" type="submit">Save Database</button>
+    </form>
+    <a class="button" href="delete-database.html">Delete Database</a>
+  </div>
+
+  <!-- Add Op container -->
+  <div id="popup-container" class="container">
+      <h2>Add Operator</h2>
+      <form action="add" method="post">
+        <input type="text"id="Name" name="Name" placeholder="Name"required>
+        <input type="text" id="username" name="username" placeholder="Username"required>
+        <input type="password" id="Password" name="Password" placeholder="Password"required>
+        <input type="text" id="Age" name="Age" placeholder="Age"required>
+        <input type="text" id="School" name="School" placeholder="School"required>
+        <button class="button" type="submit" value="Add">New Operator</button>
+      </form>
+      
+  </div>
+</body>
+</html>

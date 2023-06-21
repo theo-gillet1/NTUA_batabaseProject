@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Operator Home Page</title>
+  <style>
+    
+    /* CSS styles for the page */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    .header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      align-items: center;
+    }
+    .container2 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 80px;
+    }
+    .container2 input,
+    .container2 select {
+        margin-right: 10px;
+    }
+    .container3 {
+      width: 100%;
+      display: flex;
+      align-items: center;
+
+    }
+    h1 {
+      text-align: center;
+    }
+    h2 {
+        text-align: center;
+        margin-top: 0;
+    }
+    h3{
+      font-size: small;
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 10px;
+        margin-bottom: 20px;
+    }
+    .grid-container2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
+        margin-bottom: 20px;
+    }
+    .grid-item {
+      background-color: #6cf671;
+      padding: 20px;
+      border-radius: 5px;
+    }
+    .grid-item2 {
+      background-color: #dbf4dc;
+      padding: 20px;
+      border-radius: 5px;
+      align-items: center;
+    }
+    .button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+    input[type="text"] {
+      width: 90%;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    input[type="text2"] {
+      width: 30%;
+      padding: 10px;
+      height: 20px;
+    }
+    table, th, td{
+      border:1px solid black;
+      margin-bottom: 20px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .selected {
+      background-color: #4CAF50;
+    }
+  </style>
+</head>
+<body>
+    <div class="header">
+      <a class="button"  href="/login">Log Out</a>
+      <h1>Operator Home Page</h1>
+      <a class="button" href="personal-info.html">Personal Info</a> 
+    </div>
+    <div class="container">
+        <h2>Available Books</h2>
+        <div class="grid-container">
+          {% for item in data %}
+          <div class="grid-item">
+              <h2>{{ item[1] }}</h2>
+              <p>Author: {{ item[4] }}</p>
+              <p>Genre: {{ item[9] }}</p>
+              <p>Inventory: {{ item[7] }}</p>
+          </div>
+          {% endfor %}
+        </div>
+    </div>
+    <hr>
+    <div class="container">
+        <h2>Add New Book</h2>
+        <form action="add_book" method="POST">
+            <div class="grid-container2">
+                <input type="text"  name="Title" placeholder="Title"required>
+                <input type="text"name="Author" placeholder="Author"required>
+                <input type="text"  name="Publisher" placeholder="Publisher"required>
+                <input type="text"  name="ISBN" placeholder="ISBN"required>
+                <input type="text"  name="number of pages" placeholder="Number of Pages"required>
+                <input type="text"  name="Summary" placeholder="Summary"required>
+                <input type="text"  name="available copies" placeholder="Available Copies"required>
+                <input type="text"  name="image" placeholder="Image"required>
+                <input type="text"  name="thematic category" placeholder="Thematic Category"required>
+                <input type="text"  name="language" placeholder="Language"required>
+                <input type="text"  name="keywords" placeholder="Keywords"required>
+            </div>
+            <button class="button" name ="newBook_bt" type="submit" value="{{ data[0][12] }}">New Book</button>
+        </form>
+    </div>
+    <hr>
+    <div class="container">
+      <h2>Validate New User</h2>
+      
+      <div class="grid-container">
+        {% for user in users %}
+        <div class="grid-item">
+            <h3>--Name--</h3> <a>{{ user[1] }}</a>
+            <h3>--Username--</h3> <a>{{ user[2] }}</a>
+            <h3>--Status--</h3> <a>{{ user[6] }} </a>
+            <form action="val_user" method="POST">
+              <button class="button" name ="Accept_bt" type="submit" value="{{ user[0] }}">Accept</button>
+            </form>
+            <form action="reject_user" method="POST">
+              <button class="button" name ="Reject_bt" type="submit" value="{{ user[0] }}">Reject</button>
+            </form> 
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <hr>
+    
+    <div class="container">
+      <h2>Find and Modify a user</h2>
+      <form action="search_user" method="POST">
+        <div class="container2">
+          <input type="text2"id="Research_in" name="Research_in" placeholder="Research"required>
+          <select id = "options" name="options" size="3"required>
+            <option value="Id_user">Id</option>
+            <option value="Name_user">Name</option>
+            <option value="Username_user">Username</option>
+            <option value="Password_user">Password</option>
+            <option value="Age_user">Age</option>
+            <option value="Status_user">Status</option>
+            <option value="Borrow_user">Borrow</option>
+            <option value="Approved_user">Approved</option>
+          </select>
+          <button name ="Research_bt" class="button" type="submit" value="{{ data[0][12] }}">Research User in Database</button>   
+        </div>
+        <div class="container2">
+          <table id="myTable">
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Username</th>
+              <th>Password</th>
+              <th>Age</th>
+              <th>School</th>
+              <th>Status</th>
+              <th>Borrow</th>
+              <th>Approved</th>
+              <th>Operator Id</th>
+              <th>Operator</th>
+            </tr>
+            {% for user in research_user %}
+            <tr>
+              <td>{{  user[0]  }}</td>
+              <td>{{  user[1]  }}</td>
+              <td>{{  user[2]  }}</td>
+              <td>{{  user[3]  }}</td>
+              <td>{{  user[4]  }}</td>
+              <td>{{  user[5]  }}</td>
+              <td>{{  user[6]  }}</td>
+              <td>{{  user[7]  }}</td>
+              <td>{{  user[8]  }}</td>
+              <td>{{  user[9]  }}</td>
+              <td>{{  user[10]  }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </form>
+
+
+      <div class="grid-container2">
+        <form action="modif_user" method="POST">
+          <div class="grid-item2">
+            <div id="selectedValueDisplay">
+              <label  for="html"></label><br>
+            </div>
+            <div id="rowDisplay">
+              <label for="html"></label><br>
+            </div>
+            <div id="additionalItemDisplay">
+              <label for="html"></label><br>
+            </div>
+            <div id="columnNameDisplay">
+              <label for="html"></label><br>
+            </div>
+          </div>
+          <div class="grid-item2"> 
+            <input type="hidden" id="selectedRowInput" name="selectedRowInput">
+            <input type="hidden" id="additionalItemInput" name="additionalItemInput">
+            <input type="hidden" id="columnNameInput" name="columnNameInput">
+            <input type="text2" name = "NewValue" placeholder="New Value"required>
+            <button class="button" name = "submitButton" id="submitButton" type="submit" >Submit</button>       
+          </div>
+        </form>
+      </div>
+    </div>
+    <hr>
+
+    <div class="container">
+      <h2>Find and Modify a book</h2>
+      <form action="search_book" method="POST">
+        <div class="container2">
+          <input type="text2"id="ResearchBook_in" name="ResearchBook_in" placeholder="Research"required>
+          <select id = "optionsbook" name="optionsbook" size="3"required>
+            <option value="Id_book">Id</option>
+            <option value="Title_book">Title</option>
+            <option value="Publisher_book">Publisher</option>
+            <option value="Author_book">Author</option>
+            <option value="Inventory_book">Inventory</option>
+            <option value="All">All</option>
+          </select>
+          <button name ="ResearchBook_bt" class="button" type="submit" value="{{ data[0][12] }}">Research Book in Database</button>   
+        </div>
+      </form>
+    </div>
+    <div class="container3">
+      <table  id="myBookTable">
+        <tr>
+          <th>Id</th>
+          <th>Title</th>
+          <th>Publisher</th>
+          <th>ISBN</th>
+          <th>Author</th>
+          <th>Nmb_Page</th>
+          <th>Summary</th>
+          <th>Inventory</th>
+          <th>Image</th>
+          <th>Category</th>
+          <th>Language</th>
+          <th>Keywords</th>
+          <th>Operator_ID</th>
+        </tr>
+        {% for book in research_book %}
+        <tr>
+          <td>{{  book[0]  }}</td>
+          <td>{{  book[1]  }}</td>
+          <td>{{  book[2]  }}</td>
+          <td>{{  book[3]  }}</td>
+          <td>{{  book[4]  }}</td>
+          <td>{{  book[5]  }}</td>
+          <td>{{  book[6]  }}</td>
+          <td>{{  book[7]  }}</td>
+          <td>{{  book[8]  }}</td>
+          <td>{{  book[9]  }}</td>
+          <td>{{  book[10]  }}</td>
+          <td>{{  book[11]  }}</td>
+          <td>{{  book[12]  }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <div class="container">
+        <div class="grid-container2">
+          <form action="modif_book" method="POST">
+            <div class="grid-item2">
+              <div id="selectedBookDisplay">
+                <label></label><br>
+              </div>
+              <div id="selectedrowDisplay">
+                <label></label><br>
+              </div>
+              <div id="selectedIdDisplay">
+                <label for="html"></label><br>
+              </div>
+              <div id="columnBookDisplay">
+                <label for="html"></label><br>
+              </div>
+            </div>
+            <div class="grid-item2"> 
+              <input type="hidden" id="hiddenRow" name="hiddenRow">
+              <input type="hidden" id="hiddenId" name="hiddenId">
+              <input type="hidden" id="hiddencolumn" name="hiddencolumn">
+              <input type="text2" name = "NewValueBook" placeholder="New Value"required>
+              <button class="button" name = "submitBookButton" id="submitBookButton" type="submit" >Submit</button>       
+            </div>
+          </form>
+        </div>
+    </div>
+    <hr>
+
+    <div class="container">
+      <h2>Find and Modify a reservation</h2>
+      <form action="search_resa" method="POST">
+        <div class="container2">
+          <input type="text2"id="ResearchResa_in" name="ResearchResa_in" placeholder="Research"required>
+          <select id = "optionsResa" name="optionsResa" size="3"required>
+            <option value="Id_book_reser">Id book</option>
+            <option value="Id_user_reser">Id User</option>
+            <option value="State_reser">State Reservation</option>
+          </select>
+          <button name ="ResearchResa_bt" class="button" type="submit" value="{{ data[0][12] }}">Research Reservation in Database</button>   
+        </div>
+        <div class="container2">
+          <table id="myResaTable">
+            <tr>
+              <th>Id</th>
+              <th>Id_user</th>
+              <th>Id_book</th>
+              <th>State</th>
+            </tr>
+            {% for resa in research_resa %}
+            <tr>
+              <td>{{  resa[0]  }}</td>
+              <td>{{  resa[1]  }}</td>
+              <td>{{  resa[2]  }}</td>
+              <td>{{  resa[3]  }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </form>
+      <div class="grid-container2">
+        <form action="modif_resa" method="POST">
+          <div class="grid-item2">
+            <div id="selectedValueLabel">
+              <label for="html"></label><br>
+            </div>
+            <div id="selectedIdLabel">
+              <label for="html"></label><br>
+            </div>
+            <div id="selectedColLabel">
+              <label for="html"></label><br>
+            </div>
+          </div>
+          <div class="grid-item2"> 
+            <input type="hidden" id="selectedValueInput" name="selectedValueInput">
+            <input type="hidden" id="selectedIdInput" name="selectedIdInput">
+            <input type="hidden" id="selectedColInput" name="selectedColInput">
+            <input type="text2" name = "UpdateValue" placeholder="New Value"required>
+            <button class="button" name = "Update_bt" id="Update_bt" type="submit" >Submit</button>       
+          </div>
+        </form>
+      </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  //Select the element in the User table
+  var table = document.getElementById('myTable');
+  var cells = table.getElementsByTagName('td');
+  var headers = table.getElementsByTagName('th');
+
+  console.log('headers:', headers);
+
+  for (var i = 0; i < cells.length; i++) {
+    cells[i].addEventListener('click', function() {
+      var selectedCell = document.querySelector('.selected');
+
+      if (selectedCell) {
+        selectedCell.classList.remove('selected');
+      }
+
+      this.classList.add('selected');
+
+        
+      var selectedValue = this.textContent;
+      console.log('Selected Value:', selectedValue)
+
+      var selectedColumnIndex = this.cellIndex;
+      var columnName = headers[selectedColumnIndex].textContent;
+      console.log('Column Name:', columnName);
+
+      var selectedRow = this.parentNode;
+      var rowData = [];
+      var additionalItem = '';
+
+      console.log('selectedRow:', selectedRow);
+      console.log('selectedRow:', selectedRow.cells.length);
+
+
+      for (var j = 0; j < selectedRow.cells.length; j++) {
+        rowData.push(selectedRow.cells[j].textContent);
+        if (selectedRow.cells[j] === this) {
+          additionalItem = selectedRow.cells[(0) % selectedRow.cells.length].textContent;
+        }
+      }
+      
+      var displayElement = document.getElementById('selectedValueDisplay');
+      displayElement.textContent = 'Selected Value : ' + selectedValue;
+
+      var rowDisplayElement = document.getElementById('rowDisplay');
+      rowDisplayElement.textContent = 'Row Data : ' + rowData.join(', ');
+
+      var additionalItemElement = document.getElementById('additionalItemDisplay');
+      additionalItemElement.textContent = 'User Id : ' + additionalItem;
+
+      var columnNameElement = document.getElementById('columnNameDisplay');
+      columnNameElement.textContent = 'Column Name : ' + columnName;
+    
+    });
+  }
+
+  var submitButton = document.getElementById('submitButton');
+  submitButton.addEventListener('click', function() {
+    //Get the value of the selected item
+    var displayElement = document.getElementById('rowDisplay');
+    var selectedValue = displayElement.textContent; // Get the text content, not the value
+
+    var hiddenInput = document.getElementById('selectedRowInput');
+    hiddenInput.value = selectedValue;
+
+    //Get the value ID
+    var displayID = document.getElementById('additionalItemDisplay');
+    var selectedId = displayID.textContent;
+
+    var hiddenInputId = document.getElementById('additionalItemInput');
+    hiddenInputId.value = selectedId;
+
+    //Get the value column
+    var displaycolumn = document.getElementById('columnNameDisplay');
+    var selectedColumn = displaycolumn.textContent;
+
+    var hiddenInputColumn = document.getElementById('columnNameInput');
+    hiddenInputColumn.value = selectedColumn;
+    
+
+
+    console.log('displayElement :', displayElement);
+    console.log('selectedValue :', selectedValue);
+    console.log('hiddenInput :', hiddenInput);
+
+    
+  });
+
+
+
+  //Select the element in the book table
+  var bookTable = document.getElementById('myBookTable');
+  var bookCells = bookTable.getElementsByTagName('td');
+  var bookHeaders = bookTable.getElementsByTagName('th');
+
+  console.log('headers:', bookHeaders);
+
+  for (var i = 0; i < bookCells.length; i++) {
+    bookCells[i].addEventListener('click', function() {
+      var selectedBookCell = document.querySelector('.selected')
+
+      if (selectedBookCell) {
+        selectedBookCell.classList.remove('selected');
+      }
+
+      this.classList.add('selected');
+
+      var selectedBookValue = this.textContent;
+      console.log('Selected Value:', selectedBookValue)
+
+      var selectedBookColumnIndex = this.cellIndex;
+      var columnBookName = bookHeaders[selectedBookColumnIndex].textContent;
+      console.log('Column Name:', columnBookName);
+
+      var bookRow = this.parentNode;
+      var bookRowData = [];
+      var OperatorId = '';
+      var BookId = '';
+
+      console.log('bookRow :', bookRow);
+      console.log('bookRow.bookCells.length :', bookRow.cells.length);
+
+      for (var j = 0; j < bookRow.cells.length; j++) {
+        bookRowData.push(bookRow.cells[j].textContent);
+        if (bookRow.cells[j] === this) {
+          BookId = bookRow.cells[(0) % bookRow.cells.length].textContent;
+          OperatorId = bookRow.cells[(12) % bookRow.cells.length].textContent;
+        }
+      }
+
+      var selectedBookDisplay = document.getElementById('selectedBookDisplay');
+      selectedBookDisplay.textContent = 'Selected Value : ' + selectedBookValue;
+
+      var selectedrowDisplay = document.getElementById('selectedrowDisplay');
+      selectedrowDisplay.textContent = 'Book Id : ' + BookId;
+
+      var selectedIdDisplay = document.getElementById('selectedIdDisplay');
+      selectedIdDisplay.textContent = 'Operator Id : ' + OperatorId;
+
+      var columnBookDisplay = document.getElementById('columnBookDisplay');
+      columnBookDisplay.textContent = 'Column Name : ' + columnBookName;
+
+
+
+    });
+  }
+
+  var submitBookButton = document.getElementById('submitBookButton');
+  submitBookButton.addEventListener('click', function() {
+    //Get the value of the selected item
+    var selectedrowDisplay = document.getElementById('selectedrowDisplay');
+    var selectedrowValue = selectedrowDisplay.textContent; // Get the text content, not the value
+
+    var hiddenRow = document.getElementById('hiddenRow');
+    hiddenRow.value = selectedrowValue;
+
+    //Get the value ID
+    var selectedIdDisplay = document.getElementById('selectedIdDisplay');
+    var selectedIdValue = selectedIdDisplay.textContent;
+
+    var hiddenId = document.getElementById('hiddenId');
+    hiddenId.value = selectedIdValue;
+
+    //Get the value column
+    var columnBookDisplay = document.getElementById('columnBookDisplay');
+    var selectedColumnValue = columnBookDisplay.textContent;
+
+    var hiddencolumn = document.getElementById('hiddencolumn');
+    hiddencolumn.value = selectedColumnValue;
+
+  });
+
+
+
+
+ //Select the element in the Reservation table
+ var myResaTable = document.getElementById('myResaTable');
+  var resaCells = myResaTable.getElementsByTagName('td');
+  var resaHeaders = myResaTable.getElementsByTagName('th');
+
+  console.log('headers:', resaHeaders);
+
+  for (var i = 0; i < resaCells.length; i++) {
+    resaCells[i].addEventListener('click', function() {
+      var selectedResaCell = document.querySelector('.selected');
+
+      if (selectedResaCell) {
+        selectedResaCell.classList.remove('selected');
+      }
+
+      this.classList.add('selected');
+
+        
+      var selectedResaValue = this.textContent;
+      console.log('Selected Value:', selectedResaValue)
+
+      var selectedColumnIndex = this.cellIndex;
+      var columnName = resaHeaders[selectedColumnIndex].textContent;
+      console.log('Column Name:', columnName);
+
+      var selectedRow = this.parentNode;
+      var idResa = '';
+
+      console.log('selectedRow:', selectedRow);
+      console.log('selectedRow:', selectedRow.cells.length);
+
+
+      for (var j = 0; j < selectedRow.cells.length; j++) {
+        if (selectedRow.cells[j] === this) {
+          idResa = selectedRow.cells[(0) % selectedRow.cells.length].textContent;
+        }
+      }
+      
+      var selected = document.getElementById('selectedValueLabel');
+      selected.textContent = 'Selected Value : ' + selectedResaValue;
+
+      var resaId = document.getElementById('selectedIdLabel');
+      resaId.textContent = 'Reservation Id : ' + idResa;
+
+      var resaColumn = document.getElementById('selectedColLabel');
+      resaColumn.textContent = 'Column : ' + columnName;
+
+    
+    });
+  }
+
+  var submitButton = document.getElementById('Update_bt');
+  submitButton.addEventListener('click', function() {
+    //Get the value of the selected item
+    var displayElement = document.getElementById('selectedValueLabel');
+    var selectedValue = displayElement.textContent; // Get the text content, not the value
+
+    var hiddenInput = document.getElementById('selectedValueInput');
+    hiddenInput.value = selectedValue;
+
+    //Get the value ID
+    var displayID = document.getElementById('selectedIdLabel');
+    var selectedId = displayID.textContent;
+
+    var hiddenInputId = document.getElementById('selectedIdInput');
+    hiddenInputId.value = selectedId;
+
+    //Get the value column
+    var displaycolumn = document.getElementById('selectedColLabel');
+    var selectedColumn = displaycolumn.textContent;
+
+    var hiddenInputColumn = document.getElementById('selectedColInput');
+    hiddenInputColumn.value = selectedColumn;
+    
+
+
+    console.log('Column Label :', selectedColumn);
+    console.log('Column Input :', hiddenInputColumn.value);
+
+    
+  }); 
+
+</script>
+
+

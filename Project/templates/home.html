@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Alert Box</title>
+  <style>
+    .alert {
+      padding: 20px;
+      background-color: #099120;
+      color: white;
+    }
+  
+    .closebtn {
+      margin-left: 15px;
+      color: white;
+      font-weight: bold;
+      float: right;
+      font-size: 22px;
+      line-height: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+  
+    .closebtn:hover {
+      color: black;
+    }
+  </style>
+  <script>
+    function showAlert() {
+      document.getElementById("myAlert").style.display = "block";
+    }
+  
+    function closeAlert() {
+      document.getElementById("myAlert").style.display = "none";
+    }
+  </script>
+
+  <title>Library Main Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 10px;
+        margin-bottom: 20px;
+        justify-content: space-between;
+    }
+    .grid-item {
+      background-color: #6cf671;
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+    h3{
+      font-size: small;
+    }
+
+    .button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <a class="button" href="/login">Log Out</a>
+    <h1>Available Books in Your University</h1>
+    <a class="button" href="personal-info.html">Personal Info</a>
+    
+  </div>
+
+  <div class="container">
+    <h2>Available Books</h2>
+    <div class="grid-container">
+      {% for item in book %}
+      <div class="grid-item">
+        <h2>{{ item[1] }}</h2>
+        <p>Author: {{ item[4] }}</p>
+        <p>Genre: {{ item[9] }}</p>
+        <p>Inventory: {{ item[7] }}</p>
+        <form action="reservation" method="POST">
+          <button onclick="showAlert('item[7]')" class="button" name ="Resa_bt" type="submit" value="{{ item[0],user[0][0] }}">Borrow</button>
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+    <div id="myAlert" class="alert" style="display: none;">
+      <span class="closebtn" onclick="closeAlert();">&times;</span>
+      alert box
+    </div>
+  </div>
+
+</body>
+</html>

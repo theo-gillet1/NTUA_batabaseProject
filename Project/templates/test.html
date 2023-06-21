@@ -1,0 +1,35 @@
+<style>
+    .selected {
+      background-color: yellow;
+    }
+  </style>
+  
+  <table id="myTable">
+    <tr>
+      <td>Item 1</td>
+    </tr>
+    <tr>
+      <td>Item 2</td>
+    </tr>
+    <tr>
+      <td>Item 3</td>
+    </tr>
+  </table>
+  
+  <script>
+    var table = document.getElementById('myTable');
+    var cells = table.getElementsByTagName('td');
+  
+    for (var i = 0; i < cells.length; i++) {
+      cells[i].addEventListener('click', function() {
+        var selectedCell = document.querySelector('.selected');
+  
+        if (selectedCell) {
+          selectedCell.classList.remove('selected');
+        }
+  
+        this.classList.add('selected');
+      });
+    }
+  </script>
+  
